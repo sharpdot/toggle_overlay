@@ -40,7 +40,7 @@ function _toggle_overlay_get_json() {
 
   for ($i = 1; $i <= count($settings); $i++) {
     $file = file_load( $settings[$i]['overlay'] );
-    $settings[$i]['overlay'] = $file->uri;
+    $settings[$i]['overlay'] = file_create_url($file->uri);
   }
   drupal_json_output($settings);
 }
