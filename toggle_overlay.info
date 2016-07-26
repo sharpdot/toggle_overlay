@@ -1,0 +1,7 @@
+name = Toggle Overlay
+description = Render an semi-transparent overlay on any page
+core = 7.x
+package = Development
+stylesheets[all][] = css/overlay.css
+scripts[] = js/overlay.js
+configure = admin/config/development/overlay

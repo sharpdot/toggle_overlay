@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * @file
+ * Add a semi-transparent overlay to a page
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function toggle_overlay_menu() {
+  $items = array();
+
+  $items['admin/config/development/overlay'] = array(
+    'title' => 'Toggle Overlay',
+    'description' => 'Configure Overlay Images',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('toggle_overlay_form'),
+    'access arguments' => array('administrater toggle overlay settings'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Page Callback: Toggle overlay settings
+ *
+ * @see toggle_overlay_menu
+ */
+function toggle_overlay_form($form, &$form_state) {
+  if (empty($form_state['storage']['number_pages'])) {
+    $form_state['storage']['number_pages'] = 1;
+  }
+
+  $form['pages'] = array(
+    '#type' => 'container',
+    '#tree' => TRUE,
+    '#prefix' => '<div id="toggle_overlay_pages">',
+    '#suffix' => '</div>',
+  );
+
+  for ($i = 1; $i <= $form_state['storage']['number_pages']; $i++) {
+    $form['pages'][$i] = array(
+      '#type' => 'fieldset',
+      '#tree' => TRUE,
+    );
+
+    $form['pages'][$i]['url'] = array(
+      '#title' => t('URL'),
+      '#type' => 'textfield',
+    );
+
+    $form['pages'][$i]['overlay'] = array(
+      '#type' => 'managed_file',
+      '#name' => 'overlay_image',
+      '#title' => t('Overlay Image'),
+      '#description' => t('The image to overlay for this URL'),
+      '#upload_location' => 'public://toggle_overlay/',
+    );
+  }
+
+  $form_state['storage']['number_pages']++;
+
+  $form['add_page'] = array(
+    '#type' => 'button',
+    '#value' => t('Add A Page'),
+    '#href' => '',
+    '#ajax' => array(
+      'callback' => 'toggle_overlay_ajax_add_page',
+      'wrapper' => 'toggle_overlay_pages',
+    ),
+    '#limit_validation_errors' => array(),
+  );
+
+  $form['submit'] = array(
+    '#value' => t('Save'),
+    '#type' => 'submit',
+  );
+
+  return $form;
+}
+
+
+function toggle_overlay_ajax_add_page($form, &$form_state) {
+  return $form['pages'];
+}

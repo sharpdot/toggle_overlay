@@ -1,0 +1,4 @@
+#toggle_overlay_pages fieldset > div > div:first-child {
+    width: 30%;
+    float: left;
+}
