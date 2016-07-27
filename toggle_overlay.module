@@ -83,6 +83,7 @@ function toggle_overlay_form($form, &$form_state) {
       '#title' => t('Path'),
       '#type' => 'textfield',
       '#description' => t('Path relative to the root. No leading slash needed.'),
+      '#size' => 45,
       '#required' => TRUE,
     );
 
@@ -94,9 +95,17 @@ function toggle_overlay_form($form, &$form_state) {
       '#required' => TRUE,
     );
 
+    $form['toggle_overlay_pages'][$i]['offset'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Vertical Pixel Offset'),
+      '#description' => t('Number of pixels to move the overlay down the page'),
+      '#size' => 3,
+    );
+
     if (is_array($settings) && count($settings) >= $i) {
       $form['toggle_overlay_pages'][$i]['rel_path']['#default_value'] = $settings[$i]['rel_path'];
       $form['toggle_overlay_pages'][$i]['overlay']['#default_value'] = $settings[$i]['overlay'];
+      $form['toggle_overlay_pages'][$i]['offset']['#default_value'] = $settings[$i]['offset'];
     }
 
     $form['toggle_overlay_pages'][$i]['remove_page'] = array(

@@ -15,6 +15,7 @@
         $.getJSON('/toggle_overlays',function(data) {
             var path = window.location.pathname.substr(1);
             var img = '';
+            var offset = 0;
 
             for (var key in data) {
                 if (!data.hasOwnProperty(key)) {
@@ -24,6 +25,9 @@
                 var obj = data[key];
                 if (obj['rel_path'] == path) {
                     img = obj['overlay'];
+                    if ( !isNaN( obj['offset'] ) ) {
+                      offset = obj['offset'];
+                    }
                 }
             }
 
@@ -31,12 +35,13 @@
                 return;
             }
 
-            var toggleDiv       = '<div id="page-overlay" style="background-image: url(\'' + img + '\');"><!-- x --></div>',
+            var toggleDiv       = '<div id="page-overlay" style="background-image: url(\'' + img + '\'); background-position-y: ' + offset + 'px;"><!-- x --></div>',
                 toggleBtn       = '<p id="overlay-toggle-btn"><a href="#" class="btn btn-main">Toggle Overlay</a><a href="#" class="btn btn-extra btn-new-window"><i class="fa fa-external-link" title="open in new window"></i></a></p>',
                 $pageWrapper    = $('#page-wrapper'),
                 $pageOverlay    = $('#page-overlay'),
                 $editTabs       = $('.block-workbench,section > .tabs'),
                 $alertBar       = $('.alert-block');
+                $msgBar         = $('.messages');
 
             $pageWrapper.prepend(toggleDiv);
             $pageWrapper.prepend(toggleBtn);
@@ -46,11 +51,13 @@
                     $('#page-overlay').removeClass('active');
                     $editTabs.removeClass('hide');
                     $alertBar.removeClass('hide');
+                    $msgBar.removeClass('hide');
                     $('#overlay-toggle-btn').removeClass('active');
                 }else{
                     $('#page-overlay').addClass('active');
                     $editTabs.addClass('hide');
                     $alertBar.addClass('hide');
+                    $msgBar.addClass('hide');
                     $('#overlay-toggle-btn').addClass('active');
                 }
                 event.preventDefault();
