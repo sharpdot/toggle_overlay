@@ -14,20 +14,24 @@ function toggle_overlay_menu() {
   $items['admin/config/development/overlay'] = array(
     'title' => 'Toggle Overlay',
     'description' => 'Configure Overlay Images',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('toggle_overlay_form'),
-    'access arguments' => array('administrater toggle overlay settings'),
+    'route_name' => 'toggle_overlay.settings',
     'type' => MENU_NORMAL_ITEM,
   );
 
   $items['toggle_overlays'] = array(
     'title' => 'Overlay JSON Data',
-    'page callback' => '_toggle_overlay_get_json',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
+    'route_name' => 'toggle_overlay.json',
+    'type' => MENU_LOCAL_TASK,
   );
 
   return $items;
+}
+
+/**
+ * Implements hook_page_attachments
+ */
+function toggle_overlay_page_attachments(array &$page) {
+  $page['#attached']['library'][] = 'toggle_overlay/toggle-overlay';
 }
 
 /**

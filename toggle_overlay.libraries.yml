@@ -1,0 +1,8 @@
+toggle-overlay:
+  css:
+    theme:
+      css/toggle_overlay.css: {}
+  js:
+    js/toggle_overlay.js: {}
+  dependencies:
+    - core/jquery
