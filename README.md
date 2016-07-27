@@ -14,6 +14,7 @@ A simple and easy to use Drupal 7 module to render a design image over specific 
 3. Upload an overlay image.
 4. Enter a vertical offset (optional).
 5. Click the 'Add a Page' button and repeat steps 2 - 4 for additional pages and overlays.
+6. Click 'Save configuration' once all overlays are setup.
 
 ## Usage
 
