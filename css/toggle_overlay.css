@@ -1,0 +1,25 @@
+
+#toggle_overlay_pages fieldset > div > div:first-child,
+#toggle_overlay_pages fieldset > div > div:nth-child(2) {
+    width: 30%;
+    float: left;
+}
+#toggle_overlay_pages fieldset > div > input {
+    clear: both;
+}
+
+
+/* -- Overlay - START -- */
+body { position:relative; }
+
+#page-overlay { display:none; background:red url('/images') no-repeat scroll center 0; /* TEMP HACK: */ height:20000px;/*100%*/ left:0; opacity:0.5; position:absolute; top:0; width:100%; z-index:9999; }
+#page-overlay.active { display:block; }
+#overlay-toggle-btn { position:fixed; bottom:30px; right:30px; z-index:99999; background-color:#fff; color:#422c19; display:block; font-size:15px; line-height:16px; font-weight:bold; margin:0; padding:12px 20px 10px; text-align:left; text-decoration:none; text-transform: uppercase; opacity:0.7; }
+#overlay-toggle-btn:hover { opacity:1; }
+body.logged-in #page-overlay { background-position:center 0; }
+#overlay-toggle-btn .btn-extra { display: none;  float: left; }
+#overlay-toggle-btn.active .btn-extra { display: block; }
+
+body.overlay-fixed-topnav #page-overlay { background-position:center -191px; }
+
+.hide { display: none; }
