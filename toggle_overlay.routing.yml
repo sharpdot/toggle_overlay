@@ -1,9 +1,9 @@
 toggle_overlay.config:
   path: '/admin/config/development/overlay'
   defaults:
-    _controller: '\Drupal\toggle_overlay\Controller\OverlayController::adminSettings'
+    _form: '\Drupal\toggle_overlay\Form\OverlaySettingsForm'
   requirements:
-    _permission: 'administrater toggle overlay settings'
+    _permission: 'administrater site configuration'
 toggle_overlay.json:
   path: '/toggle_overlays.json'
   defaults:
