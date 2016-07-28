@@ -30,7 +30,7 @@
 
             var toggleDiv       = '<div id="page-overlay" style="background-image: url(\'' + img + '\'); background-position-y: ' + offset + 'px;"><!-- x --></div>',
                 toggleBtn       = '<p id="overlay-toggle-btn"><a href="#" class="btn btn-main">Toggle Overlay</a><a href="#" class="btn btn-extra btn-new-window"><i class="fa fa-external-link" title="open in new window"></i></a></p>',
-                $pageWrapper    = $('#page-wrapper'),
+                $pageWrapper    = $('body > *:first-child'),
                 $pageOverlay    = $('#page-overlay'),
                 $editTabs       = $('.block-workbench,section > .tabs'),
                 $alertBar       = $('.alert-block');
