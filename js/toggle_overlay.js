@@ -5,13 +5,6 @@
     });
 
     function initOverlayToggle(){
-        var $account = $('li.account strong');
-
-        //User must be logged in to see the overlay
-        if ( $account.length == 0 ) {
-            return;
-        }
-
         $.getJSON('/toggle_overlays',function(data) {
             var path = window.location.pathname.substr(1);
             var img = '';
