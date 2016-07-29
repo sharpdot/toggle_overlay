@@ -5,4 +5,4 @@ package = Development
 stylesheets[all][] = css/toggle_overlay.css
 scripts[] = js/toggle_overlay.js
 configure = admin/config/development/overlay
-version = "7.x-0.9.3"
+version = "7.x-0.9.4"
