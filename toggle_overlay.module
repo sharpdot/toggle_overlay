@@ -33,7 +33,7 @@ function toggle_overlay_menu() {
 /**
  * Page Callback: Get Toggle Overlay JSON Data
  *
- * @see toggle_overlay_menu
+ * @see toggle_overlay_menu()
  */
 function _toggle_overlay_get_json() {
   $settings = variable_get('toggle_overlay_pages');
@@ -48,7 +48,7 @@ function _toggle_overlay_get_json() {
 /**
  * Page Callback: Toggle overlay settings
  *
- * @see toggle_overlay_menu
+ * @see toggle_overlay_menu()
  */
 function toggle_overlay_form($form, &$form_state) {
   $settings = variable_get('toggle_overlay_pages');
@@ -136,6 +136,11 @@ function toggle_overlay_form($form, &$form_state) {
   return system_settings_form($form);
 }
 
+/**
+ * Ajax Callback: Remove the selected page
+ *
+ * @see toggle_overlay_form()
+ */
 function toggle_overlay_ajax_remove_page($form, &$form_state) {
   $button_name = $form_state['clicked_button']['#name'];
   $row_id = substr( $button_name, 12 );
@@ -162,6 +167,11 @@ function toggle_overlay_ajax_remove_page($form, &$form_state) {
   return $form['toggle_overlay_pages'];
 }
 
+/**
+ * Ajax Callback: Add another page
+ *
+ * @see toggle_overlay_form()
+ */
 function toggle_overlay_ajax_add_page($form, &$form_state) {
   return $form['toggle_overlay_pages'];
 }
