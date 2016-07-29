@@ -62,7 +62,6 @@
 
       $('#overlay-toggle-btn .btn-new-window').click(function(event){
         var imgUrl = $('#page-overlay').css('background-image').slice(5, -2);
-        console.log('img url ', imgUrl);
         window.open(imgUrl, '_blank');
         event.preventDefault();
       });
