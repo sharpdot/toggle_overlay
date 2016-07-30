@@ -24,17 +24,19 @@ class OverlayController extends ControllerBase {
   public function jsonSettings() {
     // Get Settings
     $settings = \Drupal::config('toggle_overlay.pages');
+    $pages = $settings->get('pages');
+    $pages = $pages['toggle_overlay_pages'];
 
-    $settings = array(
-      array(
-        'rel_path' => '',
-        'overlay' => '/hello.png',
-        'offset' => 1,
-      ),
-    );
+    for($i = 1; $i <= count($pages); $i++) {
+      $fid = $pages[$i]['overlay'][0];
+      $file = \Drupal\file\Entity\File::load($fid);
+      $path = $file->getFileUri();
+      $url = file_create_url($path);
+      $pages[$i]['overlay'] = $url;
+    }
 
     // Return JSON data
-    return new JsonResponse( $settings );
+    return new JsonResponse( $pages );
   }
 
   /**

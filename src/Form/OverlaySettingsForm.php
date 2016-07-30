@@ -24,6 +24,9 @@ class OverlaySettingsForm extends ConfigFormBase {
   public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
     $config = $this->config('toggle_overlay.pages');
     $settings = $config->get('pages');
+    $settings = \Drupal::config('toggle_overlay.pages');
+    $settings = $settings->get('pages');
+    $settings = $settings['toggle_overlay_pages'];
 
     $num_pages = $form_state->get('num_pages');
     if (empty($num_pages)) {
@@ -77,17 +80,19 @@ class OverlaySettingsForm extends ConfigFormBase {
         $form['toggle_overlay_pages'][$i]['offset']['#default_value'] = $settings[$i]['offset'];
       }
 
-      $form['toggle_overlay_pages'][$i]['remove_page'] = array(
-        '#type' => 'submit',
-        '#name' => 'remove_page_' . $i,
-        '#value' => t('Remove Page'),
-        '#submit' => array('::removeOne'),
-        '#ajax' => array(
-          'callback' => '::addmoreCallback',
-          'wrapper' => 'toggle_overlay_pages',
-        ),
-        '#limit_validation_errors' => array(),
-      );
+      if ( $i == $num_pages ) {
+        $form['toggle_overlay_pages'][$i]['remove_page'] = array(
+          '#type' => 'submit',
+          '#name' => 'remove_page_' . $i,
+          '#value' => t('Remove Page'),
+          '#submit' => array('::removeOne'),
+          '#ajax' => array(
+            'callback' => '::addmoreCallback',
+            'wrapper' => 'toggle_overlay_pages',
+          ),
+          '#limit_validation_errors' => array(),
+        );
+      }
     }
 
     $form['add_page'] = array(
@@ -123,20 +128,11 @@ class OverlaySettingsForm extends ConfigFormBase {
   }
 
   public function removeOne(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
-    //TODO:Which button was clicked?
-    $row_id = 1;
+    $values = $form_state->getValues();
+    $ids = array_keys($values['toggle_overlay_pages']);
+    $row_id = $ids[0];
+
     $num_pages = $form_state->get('num_pages');
-
-    $config = $this->config('toggle_overlay.pages');
-    $settings = $config->get('pages');
-
-    for ($i = $row_id; $i < $num_pages; $i++) {
-      $form['toggle_overlay_pages'][$i] = $form['toggle_overlay_pages'][$i+1];
-      $settings[$i] = $settings[$i+1];
-    }
-    unset($form['toggle_overlay_pages'][$num_pages]);
-    unset($settings[$num_pages]);
-
     $rem_button = $num_pages - 1;
     $form_state->set('num_pages', $rem_button);
     $form_state->setRebuild();
@@ -146,33 +142,11 @@ class OverlaySettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
-    if ($form_state->hasValue('add_page')) {
-      // Add a page
-      $config = $this->config('toggle_overlay.pages');
-      $settings = $config->get('pages');
-      $settings[] = array(
-        'rel_path' => '',
-        'overlay' => '',
-        'offset' => '',
-      );
-      $config->set('pages',$settings)
-          ->save();
-
-      echo "Hello!";exit;
-      //TODO: Rebuild the form
-    }
-    elseif ($form_state->hasValue('remove_page')) {
-      //TODO: Remove the page
-      //TODO: Rebuild the form
-    }
-    else {
-      //TODO: Save it!
-      /*
-      $this->config('toggle_overlay.pages')
-          ->set('pages', ...)
-          ->save();
-      */
-    }
+    $values = $form_state->getValues();
+    $settings['toggle_overlay_pages'] = $values['toggle_overlay_pages'];
+    $this->config('toggle_overlay.pages')
+        ->set('pages', $settings)
+        ->save();
 
     parent::submitForm($form, $form_state);
   }
