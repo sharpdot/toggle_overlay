@@ -5,14 +5,6 @@
     });
 
     function initOverlayToggle(){
-        var $account = $('li.account strong');
-
-        //TODO: Fix this, it doesn't work in D8
-        //User must be logged in to see the overlay
-        if ( $account.length == 0 ) {
-            //return;
-        }
-
         $.getJSON('/toggle_overlays.json',function(data) {
             var path = window.location.pathname.substr(1);
             var img = '';
@@ -36,9 +28,9 @@
                 return;
             }
 
-            var toggleDiv       = '<div id="page-overlay" style="background-image: url(\'' + img + '\'); background-position-y: ' + offset + 'px;"><!-- x --></div>',
+            var toggleDiv       = '<div style="position:relative"><div id="page-overlay" style="background-image: url(\'' + img + '\'); background-position: center ' + offset + 'px;"><!-- x --></div></div>',
                 toggleBtn       = '<p id="overlay-toggle-btn"><a href="#" class="btn btn-main">Toggle Overlay</a><a href="#" class="btn btn-extra btn-new-window"><i class="fa fa-external-link" title="open in new window"></i></a></p>',
-                $pageWrapper    = $('#page-wrapper'),
+                $pageWrapper    = $('body'),
                 $pageOverlay    = $('#page-overlay'),
                 $editTabs       = $('.block-workbench,section > .tabs'),
                 $alertBar       = $('.alert-block');
