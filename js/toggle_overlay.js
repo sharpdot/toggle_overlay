@@ -22,7 +22,7 @@
         var obj = data[key];
         if (obj['rel_path'] == path) {
           img = obj['overlay'];
-          if ( !isNaN( obj['offset'] ) ) {
+          if ( !isNaN( obj['offset'] ) && obj['offset'] != '' ) {
             offset = obj['offset'];
           }
         }
