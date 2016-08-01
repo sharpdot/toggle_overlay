@@ -69,7 +69,7 @@ function toggle_overlay_form($form, &$form_state) {
     '#suffix' => '</div>',
   );
 
-  if ($form_state['clicked_button']['#name'] == 'add_page') {
+  if (isset($form_state['clicked_button']) && $form_state['clicked_button']['#name'] == 'add_page') {
     $form_state['storage']['number_pages']++;
   }
 
